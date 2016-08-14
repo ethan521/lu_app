@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+    <!-- ?????user login -->
+    <!--
+    <service name="user_login" value='{"method":"lu.app.user.login","userName":"zhangbiao"}'/>
+    -->
+    <!--?????? usr logout -->
+    <!--
+    <service name="user_logout" value='{"method":"lu.app.user.logout","userName":"zhangbiao"}'/>
+    -->
+
+    <!--user-book search-->
+    <service name="user_search" value='{"method":"lu.app.user.search","userName":"zhangbiao"}'/>
+    <!--user register-->
+    <service name="user_register" value='{"method":"lu.app.user.register","userName":"zhangbiao","mobileNumber":"110","passWord":"123"}'/>
+
+
+    <!--book apply-->
+    <service name="book_apply" value='{"method":"lu.app.book.apply","userName":"zhangbiao","payPassword":"123","productName":"财富汇","bookMoney":"10000"}'/>
+    <!--book recharge-->
+    <service name="book_recharge" value='{"method":"lu.app.book.recharge","userName":"zhangbiao","payPassword":"123","rechargeMoney":"100"}'/>
+    <!--book search-->
+    <service name="book_search" value='{"method":"lu.app.book.search"}'/>
+
+
+
+
+    <!--product write-->
+    <service name="product_write" value='{"method":"lu.app.product.write","productName":"a","projectName":"project","securityLevel"："1","expectedReturn":"expectedReturn","saleTime":"20160811","removeTime":"20161212","totalAmount":"10000","startMoney":"1000","incrementCount":"100"}'/>
+    <!--product search-->
+    <service name="product_search" value='{"method":"lu.app.product.search"}'/>
+
+    <service name="product_searchByStatus" value='{"method":"lu.app.lzd.product.searchByStatus","productStatus":"1"}'/>
+
+</services>
+
+

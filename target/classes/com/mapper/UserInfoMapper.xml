@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.model.UserInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="mobile_number" property="mobileNumber" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="CHAR" />
+    <result column="login_error_num" property="loginErrorNum" jdbcType="INTEGER" />
+    <result column="login_status" property="loginStatus" jdbcType="CHAR" />
+    <result column="first_error_time" property="firstErrorTime" jdbcType="TIMESTAMP" />
+    <result column="lock_time" property="lockTime" jdbcType="TIMESTAMP" />
+    <result column="device_ident" property="deviceIdent" jdbcType="VARCHAR" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="delete_flag" property="deleteFlag" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="login_ip" property="loginIp" jdbcType="CHAR" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="balance" property="balance" jdbcType="REAL" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, password, mobile_number, role, login_error_num, login_status, first_error_time, 
+    lock_time, device_ident, question, delete_flag, create_time, login_ip, birthday, 
+    sex, email, balance, pay_password
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.UserInfo" >
+    insert into user_info (id, user_name, password, 
+      mobile_number, role, login_error_num, 
+      login_status, first_error_time, lock_time, 
+      device_ident, question, delete_flag, 
+      create_time, login_ip, birthday, 
+      sex, email, balance, pay_password
+      )
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{mobileNumber,jdbcType=VARCHAR}, #{role,jdbcType=CHAR}, #{loginErrorNum,jdbcType=INTEGER}, 
+      #{loginStatus,jdbcType=CHAR}, #{firstErrorTime,jdbcType=TIMESTAMP}, #{lockTime,jdbcType=TIMESTAMP}, 
+      #{deviceIdent,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{deleteFlag,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{loginIp,jdbcType=CHAR}, #{birthday,jdbcType=DATE}, 
+      #{sex,jdbcType=CHAR}, #{email,jdbcType=VARCHAR}, #{balance,jdbcType=REAL}, #{payPassword,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="loginErrorNum != null" >
+        login_error_num,
+      </if>
+      <if test="loginStatus != null" >
+        login_status,
+      </if>
+      <if test="firstErrorTime != null" >
+        first_error_time,
+      </if>
+      <if test="lockTime != null" >
+        lock_time,
+      </if>
+      <if test="deviceIdent != null" >
+        device_ident,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="loginIp != null" >
+        login_ip,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNumber != null" >
+        #{mobileNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=CHAR},
+      </if>
+      <if test="loginErrorNum != null" >
+        #{loginErrorNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginStatus != null" >
+        #{loginStatus,jdbcType=CHAR},
+      </if>
+      <if test="firstErrorTime != null" >
+        #{firstErrorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockTime != null" >
+        #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceIdent != null" >
+        #{deviceIdent,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null" >
+        #{loginIp,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=REAL},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.UserInfo" >
+    update user_info
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNumber != null" >
+        mobile_number = #{mobileNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=CHAR},
+      </if>
+      <if test="loginErrorNum != null" >
+        login_error_num = #{loginErrorNum,jdbcType=INTEGER},
+      </if>
+      <if test="loginStatus != null" >
+        login_status = #{loginStatus,jdbcType=CHAR},
+      </if>
+      <if test="firstErrorTime != null" >
+        first_error_time = #{firstErrorTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lockTime != null" >
+        lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deviceIdent != null" >
+        device_ident = #{deviceIdent,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null" >
+        delete_flag = #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null" >
+        login_ip = #{loginIp,jdbcType=CHAR},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance,jdbcType=REAL},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.UserInfo" >
+    update user_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      mobile_number = #{mobileNumber,jdbcType=VARCHAR},
+      role = #{role,jdbcType=CHAR},
+      login_error_num = #{loginErrorNum,jdbcType=INTEGER},
+      login_status = #{loginStatus,jdbcType=CHAR},
+      first_error_time = #{firstErrorTime,jdbcType=TIMESTAMP},
+      lock_time = #{lockTime,jdbcType=TIMESTAMP},
+      device_ident = #{deviceIdent,jdbcType=VARCHAR},
+      question = #{question,jdbcType=VARCHAR},
+      delete_flag = #{deleteFlag,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      login_ip = #{loginIp,jdbcType=CHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      sex = #{sex,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=REAL},
+      pay_password = #{payPassword,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <update id="passwordErrorUpdate">
+    update user_info
+    <set>
+     <if test="firstErrorTime != null" >
+       first_error_time = #{firstErrorTime,jdbcType=TIMESTAMP},
+     </if>
+     <if test="lockTime != null" >
+       lock_time = #{lockTime},
+     </if>
+      login_error_num = #{loginErrorNum},
+    </set>
+
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </update>
+
+  <update id="loginSuccessUpdate"  >
+    update user_info
+    set
+    login_error_num = 0,
+    login_status = '1',
+    first_error_time = null,
+    lock_time = null,
+    login_ip =  #{clientIP,jdbcType=VARCHAR}
+    where  user_name = #{userName,jdbcType=VARCHAR} and password = #{passWord,jdbcType=VARCHAR}
+  </update>
+
+  <update id="loginOutUpdate"  >
+    update user_info
+    set
+    login_status = '0'
+    where  user_name = #{userName,jdbcType=VARCHAR} and password = #{passWord,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateBalance"  >
+    update user_info
+    set
+    balance = #{balance,jdbcType=FLOAT}
+    where  user_name = #{userName,jdbcType=VARCHAR}
+  </update>
+
+
+
+  <select id="selectByUserName" resultMap="BaseResultMap">
+  SELECT  * FROM user_info
+  WHERE user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <!--<classPathEntry location="D:\ojdbc6-11.2.0.1.0.jar"></classPathEntry>-->
+    <classPathEntry location="D:\apache\jar_tools\mysql-connector-java-5.1.35.jar"></classPathEntry>
+
+
+    <context id="context1">
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--oracle -->
+        <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"-->
+        <!--connectionURL="jdbc:oracle:thin:@10.0.6.85:1521:orcl" userId="UA_WULIU_TEST"-->
+        <!--password="UA_WULIU_TEST"/>-->
+        <!--mysql -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.199.133:3307/lu_app"
+                        userId="zhang"
+                        password="123">
+        </jdbcConnection>
+
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="com.model"
+                            targetProject="src/main/java"/>
+        <!-- mapper接口存放目录 -->
+        <sqlMapGenerator targetPackage="com.mapper"
+                         targetProject="src/main/resources"/>
+        <javaClientGenerator targetPackage="com.mapper"
+                             targetProject="src/main/java" type="XMLMAPPER"/>
+
+        <!-- 配置不生成Exmaple文件 -->
+        <table tableName="product_info" domainObjectName="ProductInfo"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+    </context>
+</generatorConfiguration>

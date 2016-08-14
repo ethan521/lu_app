@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services>
+    <!-- ?????user login -->
+    <!--?????? usr logout -->
+    <!-- user register -->
+    <service id="lu.app.user.register" name="com.biz.user.Account" method="register" level="2"/>
+    <!--user search-->
+    <service id="lu.app.user.search" name="com.biz.user.Account" method="search" level="2"/>
+    <!--book apply-->
+    <service id="lu.app.book.apply" name = "com.biz.order.OrderBiz" method="apply" level="2"/>
+    <!--book recharge-->
+    <service id="lu.app.book.recharge" name = "com.biz.order.OrderBiz" method="recharge" level="2"/>
+    <!--book search-->
+    <service id="lu.app.book.search" name="com.biz.order.OrderBiz" method="search" level="2"/>
+    <!--product-->
+    <service id="lu.app.lzd.product.searchByStatus" name="com.biz.product.Product" method="searchByStatus" level="2"/>
+
+    <!--product write-->
+    <service id="lu.app.product.write" name="com.biz.product.Product" method="write" level="2"/>
+    <!--product search-->
+    <service id="lu.app.product.search" name="com.biz.product.Product" method="search" level="2"/>
+
+
+</services>
+

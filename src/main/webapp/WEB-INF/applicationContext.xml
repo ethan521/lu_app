@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 自动扫描quick4j包 ,将带有注解的类 纳入spring容器管理 -->
+    <!-- 引入配置文件 -->
+    <context:property-placeholder location="classpath*:*.properties"/>
+    <context:property-placeholder location="classpath*:config/*.properties"/>
+
+    <!-- spring可以自动去扫描base-pack下面或者子包下面的java文件，如果扫描到有@Component @Controller @Service等这些注解的类，则把这些类注册为bean -->
+    <context:component-scan base-package="com"/>
+    <!-- 任务扫描-->
+    <task:annotation-driven/>
+    <!-- 数据源 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3307/lu_app?characterEncoding=UTF-8"/>
+        <property name="username" value="zhang"/>
+        <property name="password" value="123"/>
+        <property name="initialSize" value="10"/>
+        <property name="maxActive" value="30"/>
+    </bean>
+    <!-- 事物驱动 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 事物模板 -->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+    <!-- 对@Transactional这个注解进行的驱动-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <!-- mybatis mapper 映射-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+    <!-- mybatis SqlSessionFactory 映射-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.mapper,com.mapper.ext"/>
+        <property name="plugins">
+            <list>
+                <ref bean="pageableInterceptor"/>
+            </list>
+        </property>
+    </bean>
+    <!-- mybatis 分页插件 -->
+    <bean name="pageableInterceptor" class="com.zhaogang.tools.mybatis.page.PageableInterceptor">
+        <property name="properties">
+            <props>
+                <prop key="dialectClass">com.zhaogang.tools.mybatis.page.MySQLDialect</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 提示资源文件类 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="resource.restResource"/>
+        <property name="defaultEncoding" value="utf-8"/>
+    </bean>
+    <!-- 提示资源文件工具类 -->
+    <bean id="messageSourceUtils" class="com.zhaogang.tools.utils.MessageSourceUtils">
+        <property name="messageSource" ref="messageSource"/>
+    </bean>
+
+    <!-- Rest 框架入口-->
+    <bean name="restControllerBeanProperties" class="com.zhaogang.tools.rest.bean.RestControllerBeanProperties">
+        <property name="isUsePerformance" value="1"/>
+        <property name="isUseHttpValid" value="0"/>
+        <property name="appId" value="pmwlid"/>
+        <property name="secretKey" value="pmwlk"/>
+        <property name="isShowDebugLog" value="true"/>
+        <property name="restServicePath" value="config/rest_service.xml"/>
+    </bean>
+    <bean name="restControllerBean" class="com.zhaogang.tools.rest.RestControllerBean">
+        <property name="properties" ref="restControllerBeanProperties"/>
+    </bean>
+    <!-- 启动加载类 -->
+    <bean id="webContextInitializing" class="com.listener.WebContextInitializing"/>
+
+    <!-- 要调用的工作类 -->
+    <bean id="quartzJob" class="com.biz.order.ShdlJob"></bean>
+    <!-- 定义调用对象和调用对象的方法 -->
+    <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 调用的类 -->
+        <property name="targetObject">
+            <ref bean="quartzJob"/>
+        </property>
+        <!-- 调用类中的方法 -->
+        <property name="targetMethod">
+            <value>job</value>
+        </property>
+    </bean>
+    <!-- 定义触发时间 -->
+    <bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail">
+            <ref bean="jobtask"/>
+        </property>
+        <!-- cron表达式 -->
+        <property name="cronExpression">
+            <value>0/60 * * * * ?</value>
+        </property>
+    </bean>
+    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  -->
+    <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="doTime"/>
+            </list>
+        </property>
+    </bean>
+</beans>

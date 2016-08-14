@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.ProductInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.model.ProductInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="CHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_info" property="projectInfo" jdbcType="CHAR" />
+    <result column="security_level" property="securityLevel" jdbcType="VARCHAR" />
+    <result column="expected_return" property="expectedReturn" jdbcType="REAL" />
+    <result column="product_life" property="productLife" jdbcType="VARCHAR" />
+    <result column="income_style" property="incomeStyle" jdbcType="VARCHAR" />
+    <result column="value_date" property="valueDate" jdbcType="TIMESTAMP" />
+    <result column="sale_time" property="saleTime" jdbcType="TIMESTAMP" />
+    <result column="product_channel" property="productChannel" jdbcType="VARCHAR" />
+    <result column="remove_time" property="removeTime" jdbcType="TIMESTAMP" />
+    <result column="total_amount" property="totalAmount" jdbcType="REAL" />
+    <result column="start_money" property="startMoney" jdbcType="REAL" />
+    <result column="remain_amount" property="remainAmount" jdbcType="REAL" />
+    <result column="increment_count" property="incrementCount" jdbcType="REAL" />
+    <result column="display_order" property="displayOrder" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="apply_record" property="applyRecord" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.model.ProductInfo" extends="BaseResultMap" >
+    <result column="product_info" property="productInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product_name, project_name, project_info, security_level, expected_return, product_life, 
+    income_style, value_date, sale_time, product_channel, remove_time, total_amount, 
+    start_money, remain_amount, increment_count, display_order, status, apply_record
+  </sql>
+  <sql id="Blob_Column_List" >
+    product_info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.model.ProductInfo" >
+    insert into product_info (id, product_name, project_name, 
+      project_info, security_level, expected_return, 
+      product_life, income_style, value_date, 
+      sale_time, product_channel, remove_time, 
+      total_amount, start_money, remain_amount, 
+      increment_count, display_order, status, 
+      apply_record, product_info)
+    values (#{id,jdbcType=INTEGER}, #{productName,jdbcType=CHAR}, #{projectName,jdbcType=VARCHAR}, 
+      #{projectInfo,jdbcType=CHAR}, #{securityLevel,jdbcType=VARCHAR}, #{expectedReturn,jdbcType=REAL}, 
+      #{productLife,jdbcType=VARCHAR}, #{incomeStyle,jdbcType=VARCHAR}, #{valueDate,jdbcType=TIMESTAMP}, 
+      #{saleTime,jdbcType=TIMESTAMP}, #{productChannel,jdbcType=VARCHAR}, #{removeTime,jdbcType=TIMESTAMP}, 
+      #{totalAmount,jdbcType=REAL}, #{startMoney,jdbcType=REAL}, #{remainAmount,jdbcType=REAL}, 
+      #{incrementCount,jdbcType=REAL}, #{displayOrder,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{applyRecord,jdbcType=CHAR}, #{productInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.ProductInfo" >
+    insert into product_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectInfo != null" >
+        project_info,
+      </if>
+      <if test="securityLevel != null" >
+        security_level,
+      </if>
+      <if test="expectedReturn != null" >
+        expected_return,
+      </if>
+      <if test="productLife != null" >
+        product_life,
+      </if>
+      <if test="incomeStyle != null" >
+        income_style,
+      </if>
+      <if test="valueDate != null" >
+        value_date,
+      </if>
+      <if test="saleTime != null" >
+        sale_time,
+      </if>
+      <if test="productChannel != null" >
+        product_channel,
+      </if>
+      <if test="removeTime != null" >
+        remove_time,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="startMoney != null" >
+        start_money,
+      </if>
+      <if test="remainAmount != null" >
+        remain_amount,
+      </if>
+      <if test="incrementCount != null" >
+        increment_count,
+      </if>
+      <if test="displayOrder != null" >
+        display_order,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="applyRecord != null" >
+        apply_record,
+      </if>
+      <if test="productInfo != null" >
+        product_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=CHAR},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectInfo != null" >
+        #{projectInfo,jdbcType=CHAR},
+      </if>
+      <if test="securityLevel != null" >
+        #{securityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedReturn != null" >
+        #{expectedReturn,jdbcType=REAL},
+      </if>
+      <if test="productLife != null" >
+        #{productLife,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeStyle != null" >
+        #{incomeStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="valueDate != null" >
+        #{valueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleTime != null" >
+        #{saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productChannel != null" >
+        #{productChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="removeTime != null" >
+        #{removeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=REAL},
+      </if>
+      <if test="startMoney != null" >
+        #{startMoney,jdbcType=REAL},
+      </if>
+      <if test="remainAmount != null" >
+        #{remainAmount,jdbcType=REAL},
+      </if>
+      <if test="incrementCount != null" >
+        #{incrementCount,jdbcType=REAL},
+      </if>
+      <if test="displayOrder != null" >
+        #{displayOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="applyRecord != null" >
+        #{applyRecord,jdbcType=CHAR},
+      </if>
+      <if test="productInfo != null" >
+        #{productInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.ProductInfo" >
+    update product_info
+    <set >
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=CHAR},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectInfo != null" >
+        project_info = #{projectInfo,jdbcType=CHAR},
+      </if>
+      <if test="securityLevel != null" >
+        security_level = #{securityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedReturn != null" >
+        expected_return = #{expectedReturn,jdbcType=REAL},
+      </if>
+      <if test="productLife != null" >
+        product_life = #{productLife,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeStyle != null" >
+        income_style = #{incomeStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="valueDate != null" >
+        value_date = #{valueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleTime != null" >
+        sale_time = #{saleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productChannel != null" >
+        product_channel = #{productChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="removeTime != null" >
+        remove_time = #{removeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=REAL},
+      </if>
+      <if test="startMoney != null" >
+        start_money = #{startMoney,jdbcType=REAL},
+      </if>
+      <if test="remainAmount != null" >
+        remain_amount = #{remainAmount,jdbcType=REAL},
+      </if>
+      <if test="incrementCount != null" >
+        increment_count = #{incrementCount,jdbcType=REAL},
+      </if>
+      <if test="displayOrder != null" >
+        display_order = #{displayOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="applyRecord != null" >
+        apply_record = #{applyRecord,jdbcType=CHAR},
+      </if>
+      <if test="productInfo != null" >
+        product_info = #{productInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.model.ProductInfo" >
+    update product_info
+    set product_name = #{productName,jdbcType=CHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_info = #{projectInfo,jdbcType=CHAR},
+      security_level = #{securityLevel,jdbcType=VARCHAR},
+      expected_return = #{expectedReturn,jdbcType=REAL},
+      product_life = #{productLife,jdbcType=VARCHAR},
+      income_style = #{incomeStyle,jdbcType=VARCHAR},
+      value_date = #{valueDate,jdbcType=TIMESTAMP},
+      sale_time = #{saleTime,jdbcType=TIMESTAMP},
+      product_channel = #{productChannel,jdbcType=VARCHAR},
+      remove_time = #{removeTime,jdbcType=TIMESTAMP},
+      total_amount = #{totalAmount,jdbcType=REAL},
+      start_money = #{startMoney,jdbcType=REAL},
+      remain_amount = #{remainAmount,jdbcType=REAL},
+      increment_count = #{incrementCount,jdbcType=REAL},
+      display_order = #{displayOrder,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      apply_record = #{applyRecord,jdbcType=CHAR},
+      product_info = #{productInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.ProductInfo" >
+    update product_info
+    set product_name = #{productName,jdbcType=CHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_info = #{projectInfo,jdbcType=CHAR},
+      security_level = #{securityLevel,jdbcType=VARCHAR},
+      expected_return = #{expectedReturn,jdbcType=REAL},
+      product_life = #{productLife,jdbcType=VARCHAR},
+      income_style = #{incomeStyle,jdbcType=VARCHAR},
+      value_date = #{valueDate,jdbcType=TIMESTAMP},
+      sale_time = #{saleTime,jdbcType=TIMESTAMP},
+      product_channel = #{productChannel,jdbcType=VARCHAR},
+      remove_time = #{removeTime,jdbcType=TIMESTAMP},
+      total_amount = #{totalAmount,jdbcType=REAL},
+      start_money = #{startMoney,jdbcType=REAL},
+      remain_amount = #{remainAmount,jdbcType=REAL},
+      increment_count = #{incrementCount,jdbcType=REAL},
+      display_order = #{displayOrder,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      apply_record = #{applyRecord,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateRemainAmount" >
+    update product_info
+    set
+    remain_amount = #{remainAmount,jdbcType=FLOAT},
+    apply_record = #{applyRecord,jdbcType=FLOAT}
+    where product_name = #{productName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateProductStatus" >
+    update product_info
+    set
+    status = #{productStatus,jdbcType=CHAR}
+    where product_name = #{productName,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByProductName" resultMap="BaseResultMap">
+    SELECT  * FROM product_info
+    WHERE product_name = #{productName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllProduct" resultMap="BaseResultMap">
+    SELECT  * FROM product_info
+  </select>
+  <select id="selectProductByStatus" resultMap="BaseResultMap">
+    SELECT  * FROM product_info
+    WHERE status = #{productStatus,jdbcType=CHAR}
+  </select>
+
+  <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from product_info
+  </select>
+</mapper>
